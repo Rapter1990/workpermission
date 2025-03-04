@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
                         url = "https://github.com/Rapter1990/workpermission"
                 ),
                 description = "Case Study - Work Permission" +
-                        " (Java 21, Spring Boot, Postgres, JUnit, Spring Security, JWT, Docker, Kubernetes, Prometheus, Grafana, Github Actions (CI/CD) ) ",
+                        " (Java 21, Spring Boot, MySql, JUnit, Spring Security, JWT, Docker, Kubernetes, Prometheus, Grafana, Github Actions (CI/CD) ) ",
                 title = "workpermission",
                 version = "1.0.0"
         )
