@@ -1,19 +1,28 @@
 server:
   port: 2552
 
+# MYSQL
 spring:
   config:
     import: optional:file:.env[.properties]
   datasource:
-    url: jdbc:postgresql://${WORK_PERMISSION_DB_IP:localhost}:${WORK_PERMISSION_DB_PORT:5432}/workpermissiondatabase
-    username: ${POSTGRES_USER:postgres}
-    password: ${POSTGRES_PASSWORD:111111}
-    driver-class-name: org.postgresql.Driver
+    name: mysql
+    url: jdbc:mysql://${WORK_PERMISSION_DB_IP:localhost}:${WORK_PERMISSION_DB_PORT:3306}/workpermissiondatabase
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:password}
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
     hibernate:
       ddl-auto: update
-    show-sql: true
   application:
     name: workpermission
+
+# SWAGGER
+springdoc:
+  api-docs:
+    enabled: true
+  show-actuator: true
 
