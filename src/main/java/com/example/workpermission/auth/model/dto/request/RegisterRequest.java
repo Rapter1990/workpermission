@@ -1,10 +1,13 @@
 package com.example.workpermission.auth.model.dto.request;
 
 import com.example.workpermission.auth.model.enums.UserType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -31,5 +34,8 @@ public class RegisterRequest {
     private String phoneNumber;
 
     private UserType userType;
+
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate joiningDate;
 
 }

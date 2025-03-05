@@ -3,6 +3,8 @@ package com.example.workpermission.builder;
 import com.example.workpermission.auth.model.dto.request.RegisterRequest;
 import com.example.workpermission.auth.model.enums.UserType;
 
+import java.time.LocalDate;
+
 public class RegisterRequestBuilder extends BaseBuilder<RegisterRequest> {
 
     public RegisterRequestBuilder() {
@@ -18,7 +20,7 @@ public class RegisterRequestBuilder extends BaseBuilder<RegisterRequest> {
                 .withPassword("managerpassword")
                 .withFirstName("ManagerFirstName")
                 .withLastName("ManagerLastName")
-                .withPhoneNumber("0987654321")
+                .withPhoneNumber("10987654321")
                 .withUserType(UserType.MANAGER);
     }
 
@@ -31,7 +33,7 @@ public class RegisterRequestBuilder extends BaseBuilder<RegisterRequest> {
                 .withPassword("employeepassword")
                 .withFirstName("EmployeeFirstName")
                 .withLastName("EmployeeLastName")
-                .withPhoneNumber("1234567890")
+                .withPhoneNumber("12345678910")
                 .withUserType(UserType.EMPLOYEE);
     }
 
@@ -64,4 +66,10 @@ public class RegisterRequestBuilder extends BaseBuilder<RegisterRequest> {
         data.setUserType(userType);
         return this;
     }
+
+    public RegisterRequestBuilder withJoiningDate(LocalDate joiningDate) {
+        data.setJoiningDate(joiningDate);
+        return this;
+    }
+
 }

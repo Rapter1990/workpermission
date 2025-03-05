@@ -15,6 +15,7 @@ public enum TokenClaims {
     USER_LAST_NAME("userLastName"),
     USER_EMAIL("userEmail"),
     USER_PHONE_NUMBER("userPhoneNumber"),
+    JOB_JOINING_DATE("jobJoiningDate"),
     STORE_TITLE("storeTitle"),
     ISSUED_AT("iat"),
     EXPIRES_AT("exp"),

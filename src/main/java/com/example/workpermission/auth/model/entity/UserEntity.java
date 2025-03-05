@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +52,9 @@ public class UserEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus = UserStatus.ACTIVE;
 
+    @Column(name = "JOB_JOINING_DATE")
+    private LocalDate joiningDate;
+
     public Map<String, Object> getClaims() {
         final Map<String, Object> claims = new HashMap<>();
 
@@ -61,6 +65,7 @@ public class UserEntity extends BaseEntity {
         claims.put(TokenClaims.USER_LAST_NAME.getValue(), this.lastName);
         claims.put(TokenClaims.USER_EMAIL.getValue(), this.email);
         claims.put(TokenClaims.USER_PHONE_NUMBER.getValue(), this.phoneNumber);
+        claims.put(TokenClaims.JOB_JOINING_DATE.getValue(), this.joiningDate != null ? this.joiningDate.toString() : null);
 
         return claims;
     }
