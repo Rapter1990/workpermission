@@ -8,8 +8,8 @@ spring:
   datasource:
     name: mysql
     url: jdbc:mysql://${WORK_PERMISSION_DB_IP:localhost}:${WORK_PERMISSION_DB_PORT:3306}/workpermissiondatabase
-    username: ${MYSQL_USER:root}
-    password: ${MYSQL_PASSWORD:password}
+    username: ${DATABASE_USERNAME:root}
+    password: ${DATABASE_PASSWORD:password}
   jpa:
     properties:
       hibernate:
