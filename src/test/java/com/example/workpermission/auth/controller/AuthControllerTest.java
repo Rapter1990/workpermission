@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,6 +53,7 @@ class AuthControllerTest extends AbstractRestControllerTest {
         // Given
         final RegisterRequest request = new RegisterRequestBuilder()
                 .withManagerValidFields()
+                .withJoiningDate(LocalDate.parse("05-03-2025", DateTimeFormatter.ofPattern("dd-MM-yyyy")))
                 .build();
 
 
@@ -85,6 +88,7 @@ class AuthControllerTest extends AbstractRestControllerTest {
         // Given
         final RegisterRequest request = new RegisterRequestBuilder()
                 .withEmployeeValidFields()
+                .withJoiningDate(LocalDate.parse("05-03-2025", DateTimeFormatter.ofPattern("dd-MM-yyyy")))
                 .build();
 
 

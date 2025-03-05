@@ -5,6 +5,8 @@ import com.example.workpermission.auth.model.entity.UserEntity;
 import com.example.workpermission.auth.model.enums.UserType;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -48,12 +50,15 @@ class RegisterRequestToUserEntityMapperTest {
     void testMapRegisterRequestListWithNullElements() {
 
         List<RegisterRequest> requests = Arrays.asList(
-                new RegisterRequest("test1@example.com",
-                        "password1",
-                        "UserFirstName",
-                        "UserLastName",
-                        "1234567890",
-                        UserType.MANAGER),
+                RegisterRequest.builder()
+                        .email("test1@example.com")
+                        .password("password1")
+                        .firstName("UserFirstName")
+                        .lastName("UserLastName")
+                        .phoneNumber("01234567890") // 11 characters minimum
+                        .userType(UserType.MANAGER)
+                        .joiningDate(LocalDate.parse("05-03-2025", DateTimeFormatter.ofPattern("dd-MM-yyyy")))
+                        .build(),
                 null
         );
 
@@ -69,11 +74,15 @@ class RegisterRequestToUserEntityMapperTest {
     @Test
     void testMapSingleRegisterRequest() {
 
-        RegisterRequest request = new RegisterRequest(
-                "test@example.com", "password",
-                "UserFirstName", "UserLastName", "1234567890",
-                UserType.MANAGER
-        );
+        RegisterRequest request = RegisterRequest.builder()
+                .email("test1@example.com")
+                .password("password1")
+                .firstName("UserFirstName")
+                .lastName("UserLastName")
+                .phoneNumber("01234567890")
+                .userType(UserType.MANAGER)
+                .joiningDate(LocalDate.parse("05-03-2025", DateTimeFormatter.ofPattern("dd-MM-yyyy")))
+                .build();
 
         UserEntity result = mapper.map(request);
 
