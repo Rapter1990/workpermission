@@ -40,6 +40,12 @@ public class AuthController {
 
     private final TokenToTokenResponseMapper tokenToTokenResponseMapper = TokenToTokenResponseMapper.initialize();
 
+    /**
+     * Endpoint to register a new user.
+     *
+     * @param registerRequest The {@link RegisterRequest} object containing user registration details.
+     * @return A {@link CustomResponse} indicating the success of the registration operation.
+     */
     @Operation(
             summary = "Register a new user",
             description = "Registers a new user in the system.",
@@ -55,6 +61,12 @@ public class AuthController {
         return CustomResponse.SUCCESS;
     }
 
+    /**
+     * Endpoint for user login.
+     *
+     * @param loginRequest The {@link LoginRequest} object containing user login credentials.
+     * @return A {@link CustomResponse} containing a {@link TokenResponse} with the generated tokens.
+     */
     @Operation(
             summary = "User login",
             description = "Authenticates a user and returns an access and refresh token.",
@@ -70,6 +82,12 @@ public class AuthController {
         return CustomResponse.successOf(tokenResponse);
     }
 
+    /**
+     * Endpoint to refresh an expired access token.
+     *
+     * @param tokenRefreshRequest The {@link TokenRefreshRequest} object containing the refresh token.
+     * @return A {@link CustomResponse} containing a {@link TokenResponse} with the refreshed tokens.
+     */
     @Operation(
             summary = "Refresh access token",
             description = "Refreshes an expired access token using a valid refresh token.",
@@ -86,6 +104,12 @@ public class AuthController {
         return CustomResponse.successOf(tokenResponse);
     }
 
+    /**
+     * Endpoint to log out a user.
+     *
+     * @param tokenInvalidateRequest The {@link TokenInvalidateRequest} object containing the token to be invalidated.
+     * @return A {@link CustomResponse} indicating the success of the logout operation.
+     */
     @Operation(
             summary = "Log out a user",
             description = "Invalidates the provided token, effectively logging out the user.",
@@ -99,7 +123,5 @@ public class AuthController {
         logoutService.logout(tokenInvalidateRequest);
         return CustomResponse.SUCCESS;
     }
-
-
 
 }

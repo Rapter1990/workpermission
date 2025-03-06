@@ -12,6 +12,8 @@ import com.example.workpermission.workpermit.model.enums.LeaveStatus;
 import com.example.workpermission.workpermit.model.mapper.CustomPageLeaveRequestToCustomPagingLeaveRequestResponseMapper;
 import com.example.workpermission.workpermit.model.mapper.LeaveRequestToLeaveRequestResponseMapper;
 import com.example.workpermission.workpermit.service.LeaveRequestService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +44,11 @@ public class LeaveRequestController {
      * @param request the leave request details
      * @return the created leave request in response format
      */
+    @Operation(
+            summary = "Create a new leave request",
+            description = "Creates a new leave request with the provided details and returns the created leave request."
+    )
+    @ApiResponse(responseCode = "200", description = "Successfully created leave request")
     @PreAuthorize("hasAnyAuthority('MANAGER','EMPLOYEE')")
     @PostMapping
     public CustomResponse<LeaveRequestResponse> createLeaveRequest(@RequestBody final CreateLeaveRequest request) {
@@ -50,6 +57,17 @@ public class LeaveRequestController {
         return CustomResponse.successOf(response);
     }
 
+    /**
+     * Retrieves a leave request by its unique identifier.
+     *
+     * @param id the unique identifier of the leave request
+     * @return the leave request in response format
+     */
+    @Operation(
+            summary = "Get leave request by ID",
+            description = "Retrieves the leave request with the specified ID."
+    )
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved leave request")
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('MANAGER','EMPLOYEE')")
     public CustomResponse<LeaveRequestResponse> getLeaveRequestById(@PathVariable @Valid @UUID final String id){
@@ -60,6 +78,18 @@ public class LeaveRequestController {
         return CustomResponse.successOf(response);
     }
 
+    /**
+     * Retrieves a paginated list of leave requests for a specific user.
+     *
+     * @param userId the unique identifier of the user
+     * @param leaveRequestPagingRequest the paging request details
+     * @return a paginated response of leave requests in response format
+     */
+    @Operation(
+            summary = "Get leave requests by user",
+            description = "Retrieves a paginated list of leave requests for the specified user."
+    )
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved leave requests")
     @PreAuthorize("hasAnyAuthority('MANAGER','EMPLOYEE')")
     @GetMapping("/users/{userId}")
     public CustomResponse<CustomPagingResponse<LeaveRequestResponse>> getLeaveRequestsByUser(
@@ -82,6 +112,11 @@ public class LeaveRequestController {
      * @param status         the new leave status
      * @return the updated leave request in response format
      */
+    @Operation(
+            summary = "Update leave status",
+            description = "Updates the status of an existing leave request and returns the updated leave request."
+    )
+    @ApiResponse(responseCode = "200", description = "Successfully updated leave status")
     @PreAuthorize("hasAuthority('MANAGER')")
     @PatchMapping("/{leaveRequestId}/status")
     public CustomResponse<LeaveRequestResponse> updateLeaveStatus(
@@ -101,6 +136,11 @@ public class LeaveRequestController {
      * @param userId the unique identifier of the user
      * @return a {@link ResponseEntity} containing the number of remaining leave days
      */
+    @Operation(
+            summary = "Get remaining leave days",
+            description = "Retrieves the number of remaining leave days available for the specified employee."
+    )
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved remaining leave days")
     @PreAuthorize("hasAnyAuthority('MANAGER','EMPLOYEE')")
     @GetMapping("/remaining/{userId}")
     public CustomResponse<Long> getRemainingLeaveDays(@PathVariable @Valid @UUID final String userId) {
