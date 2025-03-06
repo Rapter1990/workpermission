@@ -1,0 +1,832 @@
+{
+	"info": {
+		"_postman_id": "c7574962-edcb-4b91-a616-e7cf59cf84b8",
+		"name": "Work Permission",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33002673"
+	},
+	"item": [
+		{
+			"name": "auth | manager",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"exampleManagerFirstName\",\r\n    \"lastName\": \"exampleManagerSurName\",\r\n    \"email\": \"exampleManager@gmail.com\",\r\n    \"password\": \"exampleManager\",\r\n    \"phoneNumber\": \"01234567890\",\r\n    \"userType\" : \"MANAGER\",\r\n    \"joiningDate\": \"04-03-2019\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2552/api/v1/authentication/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "2552",
+							"path": [
+								"api",
+								"v1",
+								"authentication",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the JSON response\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"// Check if the response contains accessToken and refreshToken\r",
+									"if (response.isSuccess && response.response.accessToken && response.response.refreshToken) {\r",
+									"    // Set the tokens as environment variables for manager\r",
+									"    pm.environment.set(\"MANAGER_ACCESS_TOKEN\", response.response.accessToken);\r",
+									"    pm.environment.set(\"MANAGER_REFRESH_TOKEN\", response.response.refreshToken);\r",
+									"    \r",
+									"    console.log(\"Manager Access Token and Refresh Token have been set successfully.\");\r",
+									"} else {\r",
+									"    console.error(\"Failed to extract manager tokens from the response.\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"exampleManager@gmail.com\",\r\n    \"password\": \"exampleManager\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2552/api/v1/authentication/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "2552",
+							"path": [
+								"api",
+								"v1",
+								"authentication",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the JSON response\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"// Check if the response contains accessToken and refreshToken\r",
+									"if (response.isSuccess && response.response.accessToken && response.response.refreshToken) {\r",
+									"    // Set the new tokens as environment variables\r",
+									"    pm.environment.set(\"MANAGER_ACCESS_TOKEN\", response.response.accessToken);\r",
+									"    pm.environment.set(\"MANAGER_REFRESH_TOKEN\", response.response.refreshToken);\r",
+									"    \r",
+									"    console.log(\"Manager Access Token and Refresh Token have been updated successfully.\");\r",
+									"} else {\r",
+									"    console.error(\"Failed to update manager tokens. Check the response structure or success status.\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiIyYjcxZjY1YS1jZTMyLTRkYmYtYWMxOS1jYzJiZDNmZTQ4NzEiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3NDExMTc1ODUsImV4cCI6MTc0MTIwMzk4NSwidXNlcklkIjoiMDdiZWE0YzYtMjBkZC00MDJjLWI0YTEtYjk2ZTUzMDQ5MGJjIn0.vOOimsWOJ5b599ZSHKMvbiaIKo6gQryDw8ecaPKaeh-titBj5P8btzCXyukG3c6gkncPEkbGPcVe7z0JJ3QIM7kvSELPxCpQHnrgDqQYQ7HRN-UGqfWDezg3FXn9dsVhZPHMgUVMRbHx2WlCnGsY3co-WImyBCoLj0SyqVIRT2KDqzp10oBWM8c4_D2556eosBIELyZ5W_2VgJFH7V6VV0pLdEBtF-quBRxts06Yhg-5voFM_6T1GlHcHCz4MSUSzkcZPvkYVmUJZ_472Xhs3O_iun8z-YoMYNs7KiY5O01c_ePmWIBR_cFSO6SyN_baPUE9FEUgwbP5CcUWUpWzww\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2552/api/v1/authentication/user/refresh-token",
+							"host": [
+								"localhost"
+							],
+							"port": "2552",
+							"path": [
+								"api",
+								"v1",
+								"authentication",
+								"user",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response\r",
+									"if (pm.response.code === 200) {\r",
+									"    const response = pm.response.json();\r",
+									"    \r",
+									"    // Check if the response is successful\r",
+									"    if (response.isSuccess) {\r",
+									"        // Set MANAGER_ACCESS_TOKEN and MANAGER_REFRESH_TOKEN to empty strings in the environment\r",
+									"        pm.environment.set(\"MANAGER_ACCESS_TOKEN\", \"\");\r",
+									"        pm.environment.set(\"MANAGER_REFRESH_TOKEN\", \"\");\r",
+									"        console.log(\"Tokens cleared successfully.\");\r",
+									"    } else {\r",
+									"        console.log(\"Logout was not successful, tokens not cleared.\");\r",
+									"    }\r",
+									"} else {\r",
+									"    console.log(\"Request failed, tokens not cleared.\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accessToken\": \"eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiJhMjU4MmVjNy05MGJjLTRjZGEtOWExMy1mNWUyNDBiMGZhMDgiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3NDExMjEzNDksImV4cCI6MTc0MTEyMzE0OSwidXNlclN0YXR1cyI6IkFDVElWRSIsImpvYkpvaW5pbmdEYXRlIjoiMjAxOS0wMy0wNCIsInVzZXJMYXN0TmFtZSI6ImV4YW1wbGVNYW5hZ2VyU3VyTmFtZSIsInVzZXJQaG9uZU51bWJlciI6IjAxMjM0NTY3ODkwIiwidXNlckVtYWlsIjoiZXhhbXBsZU1hbmFnZXJAZ21haWwuY29tIiwidXNlclR5cGUiOiJNQU5BR0VSIiwidXNlckZpcnN0TmFtZSI6ImV4YW1wbGVNYW5hZ2VyRmlyc3ROYW1lIiwidXNlcklkIjoiNjVhZmJmY2MtYzBlZC00NDI4LWIxYWYtMWYzNTVjMDBiZmViIn0.Bl41eMVtDr7G0xtKEBXnP3B1rm84wp13aONMINB9UXoRa9MZNVlX1HwsD4aLSF8x3ijsd_LuI16aultnAMFdUtJX898wAfbbRvLaIQlU6fTIKgGGbr0tKsr6Rjbt9pIXDeECrH8xmveo5f5PRNZfqd6INMBm6agQNyUWzOWlTAfV21oSQSqkhEoGo3hCGBK3c2L_F2HArs6G7Mmfp3UfiYnx4JFrpmho1ti9rmYzuHbkfE3AILvTuiY5pcDg9qV_Ne6JLTq_8BUGovAL7CKwIebD2--7PB7Rn37g6mEZ5zmM9aenuh35ngI442JKuajtkPGP3DLlV5Aq_mDqmR2EGQ\",\r\n    \"refreshToken\": \"eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiIzOTcyOGY4OC00NjUwLTRjNTMtYjExMC0wODI4NGU5NWFhNjEiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3NDExMjEzMzQsImV4cCI6MTc0MTIwNzczNCwidXNlcklkIjoiNjVhZmJmY2MtYzBlZC00NDI4LWIxYWYtMWYzNTVjMDBiZmViIn0.XxGiaaHOy6LayXfxpmKXt4OwaycLPEllZXUTxIyFR5ppKH2Df7Ia8vq-XPeR11ix9x9hvffoZhHKSqwPXcfL02O_3k5rPbMapzbStCGMW0DlYyOhkx6r2l5bT7VcezZkDua1FVttzMJEMptmQM__1ziNASYk5GU9WO-2SGxoyZRq9P56vPmobrEVIbCxbqQL1IiSmrypoAfH1LTIwMe3hujfow2-RAwMrRZZSFwU7kCBnCZkbJSSJZib_7ReJT83bX5BlvcmHri4zx3MGzJwB4LRBolZJpehb1ceG2bpdEaPKcpHh5Mnmi723pD_PBwuW26-8lyBDNbFlrweW_tT_w\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2552/api/v1/authentication/user/logout",
+							"host": [
+								"localhost"
+							],
+							"port": "2552",
+							"path": [
+								"api",
+								"v1",
+								"authentication",
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth | employee",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"exampleEmployeeFirstName\",\r\n    \"lastName\": \"exampleEmployeeSurName\",\r\n    \"email\": \"exampleEmployee@gmail.com\",\r\n    \"password\": \"exampleEmployee\",\r\n    \"phoneNumber\": \"01234567890\",\r\n    \"userType\" : \"EMPLOYEE\",\r\n    \"joiningDate\": \"04-03-2022\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2552/api/v1/authentication/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "2552",
+							"path": [
+								"api",
+								"v1",
+								"authentication",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the JSON response\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"// Check if the response contains accessToken and refreshToken\r",
+									"if (response.isSuccess && response.response.accessToken && response.response.refreshToken) {\r",
+									"    // Set the tokens as environment variables for admin\r",
+									"    pm.environment.set(\"EMPLOYEE_ACCESS_TOKEN\", response.response.accessToken);\r",
+									"    pm.environment.set(\"EMPLOYEE_REFRESH_TOKEN\", response.response.refreshToken);\r",
+									"    \r",
+									"    console.log(\"Employee Access Token and Refresh Token have been set successfully.\");\r",
+									"} else {\r",
+									"    console.error(\"Failed to extract employee tokens from the response.\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"exampleEmployee@gmail.com\",\r\n    \"password\": \"exampleEmployee\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2552/api/v1/authentication/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "2552",
+							"path": [
+								"api",
+								"v1",
+								"authentication",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the JSON response\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"// Check if the response contains accessToken and refreshToken\r",
+									"if (response.isSuccess && response.response.accessToken && response.response.refreshToken) {\r",
+									"    // Set the new tokens as environment variables\r",
+									"    pm.environment.set(\"EMPLOYEE_ACCESS_TOKEN\", response.response.accessToken);\r",
+									"    pm.environment.set(\"EMPLOYEE_REFRESH_TOKEN\", response.response.refreshToken);\r",
+									"    \r",
+									"    console.log(\"Employee Access Token and Refresh Token have been updated successfully.\");\r",
+									"} else {\r",
+									"    console.error(\"Failed to update Employee tokens. Check the response structure or success status.\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiI1MGY1ZDgwYy03YmZjLTQ4ZmMtOGVhYS0yZjZkM2UxNGQ4NTAiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3NDExMTc2MzIsImV4cCI6MTc0MTIwNDAzMiwidXNlcklkIjoiMzQ0ZjY2YjAtOTc2OS00NjA1LTlmNWQtOGNhOGUyMjZmYTIzIn0.Ac8fpwHGHHT04zYysetChXJTXdb9Sthn0-W2-SMyD1CnMOIylYVUtEeoMuaErRhTU5FBOcScgj6Vyc0xPBTQ9B7_hFk8JPSZESz4fxfVwfIMgOjK5CSUtsdu6w1zLDRoXqjhKX7MHjgDfGzfMhx0BQ0lG0Qgk0GVDpcshZhSutrCgoYUpWxLJIm8W3gv2jvT3Uwne5COhlTSzqdhoWk01jbpUHKbJVi-djjD8fFV9Nz_rYCT1VMi9h2iT18OcinG9aVo5CFcxBjXnYPjRQkXTOvKml5Y_o7-_tw-BRcNSfrbPeGrW7bkQMOAhLEBjXzPL1X4dX-e05149H-MNOYuFg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2552/api/v1/authentication/user/refresh-token",
+							"host": [
+								"localhost"
+							],
+							"port": "2552",
+							"path": [
+								"api",
+								"v1",
+								"authentication",
+								"user",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response\r",
+									"if (pm.response.code === 200) {\r",
+									"    const response = pm.response.json();\r",
+									"    \r",
+									"    // Check if the response is successful\r",
+									"    if (response.isSuccess) {\r",
+									"        // Set USER_ACCESS_TOKEN and USER_REFRESH_TOKEN to empty strings in the environment\r",
+									"        pm.environment.set(\"EMPLOYEE_ACCESS_TOKEN\", \"\");\r",
+									"        pm.environment.set(\"EMPLOYEE_REFRESH_TOKEN\", \"\");\r",
+									"        console.log(\"Tokens cleared successfully.\");\r",
+									"    } else {\r",
+									"        console.log(\"Logout was not successful, tokens not cleared.\");\r",
+									"    }\r",
+									"} else {\r",
+									"    console.log(\"Request failed, tokens not cleared.\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accessToken\": \"eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiIwOTE4ZTI5NS00ODJkLTQ1NDYtOWNhZS00NGQ1MDFmODNhYmUiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3NDExMTc2NDQsImV4cCI6MTc0MTExOTQ0NCwidXNlclN0YXR1cyI6IkFDVElWRSIsInVzZXJMYXN0TmFtZSI6ImV4YW1wbGVFbXBsb3llZVN1ck5hbWUiLCJ1c2VyUGhvbmVOdW1iZXIiOiIwMTIzNDU2Nzg5MCIsInVzZXJFbWFpbCI6ImV4YW1wbGVFbXBsb3llZUBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6IkVNUExPWUVFIiwidXNlckZpcnN0TmFtZSI6ImV4YW1wbGVFbXBsb3llZUZpcnN0TmFtZSIsInVzZXJJZCI6IjM0NGY2NmIwLTk3NjktNDYwNS05ZjVkLThjYThlMjI2ZmEyMyJ9.u9PCxfPJkViBFTML71a7IBqYP1yXJo4JjbxtNHHPD9zvd4ypBBXQIxAC92-pJv-W0P_ttvB8_1HDZGzuZNiQEIEKEgvd9ElJ1yHZwUbSsg84SEZVahwSRT0eXnS-ONMKIzihZ405HdTbQqrCE_tfYquXCOhqf6Eh5No2anieMtbyVaowv7F5xs7syEb1n0IMolU9fexZECtyAyUq3QJVwiH5VgZ01p3E0sKQwYlc_EUpngAroj6NCpfI8Qz5Ig-cMt6a9GlyTiRiIE5GUgVJgfqMjNqgbSs5olq2xFjABwOEMF5eGwHuKPt5d7j6RjVPr4b5xZGOLWZxC6qprZw-qQ\",\r\n    \"refreshToken\": \"eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJSUzI1NiJ9.eyJqdGkiOiI1MGY1ZDgwYy03YmZjLTQ4ZmMtOGVhYS0yZjZkM2UxNGQ4NTAiLCJpc3MiOiJJU1NVRVIiLCJpYXQiOjE3NDExMTc2MzIsImV4cCI6MTc0MTIwNDAzMiwidXNlcklkIjoiMzQ0ZjY2YjAtOTc2OS00NjA1LTlmNWQtOGNhOGUyMjZmYTIzIn0.Ac8fpwHGHHT04zYysetChXJTXdb9Sthn0-W2-SMyD1CnMOIylYVUtEeoMuaErRhTU5FBOcScgj6Vyc0xPBTQ9B7_hFk8JPSZESz4fxfVwfIMgOjK5CSUtsdu6w1zLDRoXqjhKX7MHjgDfGzfMhx0BQ0lG0Qgk0GVDpcshZhSutrCgoYUpWxLJIm8W3gv2jvT3Uwne5COhlTSzqdhoWk01jbpUHKbJVi-djjD8fFV9Nz_rYCT1VMi9h2iT18OcinG9aVo5CFcxBjXnYPjRQkXTOvKml5Y_o7-_tw-BRcNSfrbPeGrW7bkQMOAhLEBjXzPL1X4dX-e05149H-MNOYuFg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2552/api/v1/authentication/user/logout",
+							"host": [
+								"localhost"
+							],
+							"port": "2552",
+							"path": [
+								"api",
+								"v1",
+								"authentication",
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "workpermit",
+			"item": [
+				{
+					"name": "manager",
+					"item": [
+						{
+							"name": "Create a Leave Request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{MANAGER_ACCESS_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userId\": \"123e4567-e89b-12d3-a456-426614174000\",\r\n  \"startDate\": \"2025-04-01\",\r\n  \"endDate\": \"2025-04-05\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:2552/api/v1/leaverequests",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2552",
+									"path": [
+										"api",
+										"v1",
+										"leaverequests"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get a Leave Request by ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{MANAGER_ACCESS_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2552/api/v1/leaverequests/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2552",
+									"path": [
+										"api",
+										"v1",
+										"leaverequests",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "123e4567-e89b-12d3-a456-426614174000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Leave Requests by Manager User",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{MANAGER_ACCESS_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"pagination\": {\r\n    \"pageNumber\": 1,\r\n    \"pageSize\": 5\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:2552/api/v1/leaverequests/users/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2552",
+									"path": [
+										"api",
+										"v1",
+										"leaverequests",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "123e4567-e89b-12d3-a456-426614174000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update the Status of a Leave Request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{MANAGER_ACCESS_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2552/api/v1/leaverequests/:id/status?status=APPROVED",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2552",
+									"path": [
+										"api",
+										"v1",
+										"leaverequests",
+										":id",
+										"status"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "APPROVED"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Remaining Leave Days for a Manager User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{MANAGER_ACCESS_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2552/api/v1/leaverequests/remaining/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2552",
+									"path": [
+										"api",
+										"v1",
+										"leaverequests",
+										"remaining",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "employee",
+					"item": [
+						{
+							"name": "Create a Leave Request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{EMPLOYEE_ACCESS_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userId\": \"68b3d6b3-ce27-4bba-92d3-e6fe6edcbe0f\",\r\n  \"startDate\": \"04-03-2025\",\r\n  \"endDate\": \"07-03-2025\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:2552/api/v1/leaverequests",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2552",
+									"path": [
+										"api",
+										"v1",
+										"leaverequests"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get a Leave Request by ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{EMPLOYEE_ACCESS_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2552/api/v1/leaverequests/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2552",
+									"path": [
+										"api",
+										"v1",
+										"leaverequests",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "383064da-bce3-42ea-be3c-e25a3f2fd524"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Leave Requests by Employee User",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{EMPLOYEE_ACCESS_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"pagination\": {\r\n    \"pageNumber\": 1,\r\n    \"pageSize\": 5\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:2552/api/v1/leaverequests/users/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2552",
+									"path": [
+										"api",
+										"v1",
+										"leaverequests",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "123e4567-e89b-12d3-a456-426614174000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Remaining Leave Days for an Employee User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{EMPLOYEE_ACCESS_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2552/api/v1/leaverequests/remaining/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2552",
+									"path": [
+										"api",
+										"v1",
+										"leaverequests",
+										"remaining",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
