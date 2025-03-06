@@ -238,9 +238,6 @@ To monitor the application, you can use the following tools:
   Open in your browser at [http://localhost:9090](http://localhost:9090)  
   Prometheus collects and stores application metrics.
 
-  Alert is alrealdy defined in Alert tab
-
-
 - **Grafana**:  
   Open in your browser at [http://localhost:3000](http://localhost:3000)  
   Grafana provides a dashboard for visualizing the metrics.  
