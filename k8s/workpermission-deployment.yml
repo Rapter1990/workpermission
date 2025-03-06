@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workpermission
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workpermission
+  template:
+    metadata:
+      labels:
+        app: workpermission
+    spec:
+      containers:
+        - name: workpermission
+          image: noyandocker/workpermission:latest
+          ports:
+            - containerPort: 2552  # Use the SERVER_PORT from the config map, if applicable.
+          envFrom:
+            - configMapRef:
+                name: workpermission-config
+          env:
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: DATABASE_USERNAME
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: DATABASE_PASSWORD
+            - name: spring.datasource.url
+              value: "jdbc:mysql://mysql.default.svc.cluster.local:3307/workpermissiondatabase"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: workpermission-service
+  namespace: default
+spec:
+  selector:
+    app: workpermission
+  ports:
+    - protocol: TCP
+      port: 2552
+      targetPort: 2552
+  type: NodePort

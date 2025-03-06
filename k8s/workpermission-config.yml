@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: workpermission-config
+  namespace: default
+data:
+  WORK_PERMISSION_DB_IP: "mysql.default.svc.cluster.local"
+  WORK_PERMISSION_DB_PORT: "3307"
+  SERVER_PORT: "2552"
